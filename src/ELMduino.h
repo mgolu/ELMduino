@@ -7,7 +7,7 @@
 //-------------------------------------------------------------------------------------//
 // Protocol IDs
 //-------------------------------------------------------------------------------------//
-const char AUTOMATIC                  = '0';
+const char AUTOMATIC_PROTOCOL                  = '0';
 const char SAE_J1850_PWM_41_KBAUD     = '1';
 const char SAE_J1850_PWM_10_KBAUD     = '2';
 const char ISO_9141_5_BAUD_INIT       = '3';
@@ -135,6 +135,7 @@ const uint8_t ACTUAL_ENGINE_TORQUE             = 98;  // 0x62 - %
 const uint8_t ENGINE_REFERENCE_TORQUE          = 99;  // 0x63 - Nm
 const uint8_t ENGINE_PERCENT_TORQUE_DATA       = 100; // 0x64 - %
 const uint8_t AUX_INPUT_OUTPUT_SUPPORTED       = 101; // 0x65 - bit encoded
+const uint8_t ODOMETER						   = 166; // 0xA6
 
 
 const uint8_t SERVICE_02                       = 2;
@@ -308,9 +309,7 @@ public:
 	float rpm();
 	int32_t kph();
 	float mph();
-	
-
-
+	int engine_temp();
 
 private:
 	char query[QUERY_LEN] = { '\0' };

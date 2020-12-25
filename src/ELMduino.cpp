@@ -32,8 +32,8 @@ bool ELM327::begin(Stream &stream, char protocol, uint16_t payloadLen)
 	payload = (char*)malloc(PAYLOAD_LEN);
 
 	// test if serial port is connected
-	if (!elm_port)
-		return false;
+	//if (!elm_port)
+	//	return false;
 
 	// try to connect
 	if (!initializeELM(protocol))
@@ -114,8 +114,10 @@ bool ELM327::initializeELM(char protocol)
 	sprintf(command, SET_PROTOCOL_TO_H_SAVE, protocol);
 
     if (sendCommand(command) == ELM_SUCCESS)
+	{
         if (strstr(payload, "OK") != NULL)
             connected = true;
+	}
 
 	return connected;
 }
@@ -474,8 +476,11 @@ float ELM327::rpm()
 	return ELM_GENERAL_ERROR;
 }
 
-
-
+int ELM327::engine_temp()
+{
+	if (queryPID(SERVICE_01, ENGINE_COOLANT_TEMP)) return (findResponse() - 40);
+	return ELM_GENERAL_ERROR;
+}
 
 /*
  int8_t ELM327::sendCommand(const char *cmd)
